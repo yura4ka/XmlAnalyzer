@@ -1,7 +1,7 @@
 .nav {
     background-color: var(--accent-color);
     padding: 15px;
-    min-height: 5vh;
+    height: var(--nav-height);
 }
 
 .nav-link {

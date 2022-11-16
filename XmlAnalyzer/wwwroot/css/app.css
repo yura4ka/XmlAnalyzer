@@ -12,6 +12,12 @@
     --light-gray: #efefef;
     --dark-color: #2e2b2b;
     --error-color: #eb6440;
+
+    --nav-height: 102px;
+}
+
+body {
+    overflow-y: hidden;
 }
 
 a {

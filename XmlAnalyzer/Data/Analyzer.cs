@@ -10,7 +10,7 @@ namespace XmlAnalyzer.Data
 		public Analyzer() 
 		{ 
 			File = Array.Empty<byte>();
-			AnalyzeStrategy = new SaxStrategy();
+			AnalyzeStrategy = new LinqToXmlStrategy();
 		}
 
 		public Dictionary<string, Filter> GetOptions()

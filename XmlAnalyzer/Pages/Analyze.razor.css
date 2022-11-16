@@ -1,6 +1,6 @@
 ﻿.main {
-    overflow-x: scroll;
-    height: 95vh;
+    overflow: scroll;
+    height: calc(100vh - var(--nav-height));
 }
 
 table {
