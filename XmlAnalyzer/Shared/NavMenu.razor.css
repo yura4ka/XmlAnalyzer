@@ -1,0 +1,15 @@
+.nav {
+    background-color: var(--accent-color);
+    padding: 15px;
+    min-height: 5vh;
+}
+
+.nav-link {
+    color: white;   
+}
+
+.title {
+    font-size: 60px;
+    margin: 50px;
+    font-weight: bold;
+}

@@ -1,0 +1,117 @@
+﻿@using XmlAnalyzer.Data
+@inject IJSRuntime _js
+
+<div class="multiSelect">
+	<div class="name">@Name</div>
+	<div class="container">
+		<input type="text" name="@Name" class="selectInput" @oninput=OnSearchInput @onfocus=OnSearchFocus />
+		<div class="options">
+			<label class="optionContainer clearFilters">
+				<input type="button" value="Очистити фільтри" @onclick=OnClearClick />
+			</label>
+			<label class="optionContainer chooseAll">
+				<input type="checkbox" name="@Name" @onchange=OnAllValueChanged>
+				<span class="checkmark"></span>
+				Вибрати все
+			</label>
+			@foreach (string option in Options)
+			{
+				<label class="optionContainer @(_isOptionsVisible.GetValueOrDefault(option, true) ? "" : "hidden")">
+					<input type="checkbox" name="@Name" @onchange="() => OnValueChange(option)">
+					<span class="checkmark"></span>
+					@option
+				</label>
+			}
+		</div>
+	</div>
+</div>
+
+
+@code {
+	[Parameter]
+	public string? Name { get; set; }
+
+	[Parameter]
+	public Filter Options { get; set; } = new();
+
+	[Parameter]
+	public Filter Values { get; set; } = new();
+
+	[Parameter]
+	public EventCallback OnChange { get; set; }
+
+	private Dictionary<string, bool> _isOptionsVisible = new();
+	private string _searchString = "";
+
+	protected override void OnInitialized()
+	{
+		base.OnInitialized();
+	}
+
+	private void OnValueChange(string option)
+	{
+		if (Values.Contains(option))
+			Values.Remove(option);
+		else
+			Values.Add(option);
+
+		_js.InvokeVoidAsync("markCheckbox", Name, Values.Count == Options.Count);
+		OnChange.InvokeAsync();
+	}
+
+	private void OnAllValueChanged(ChangeEventArgs e)
+	{
+		bool value = (bool)(e.Value ?? true);
+		foreach (var option in Options)
+		{
+			if (_isOptionsVisible.GetValueOrDefault(option, true))
+			{
+				if (value) Values.Add(option);
+				else Values.Remove(option);
+			}
+
+		}
+
+		OnChange.InvokeAsync();
+	}
+
+	private void OnClearClick()
+	{
+		foreach (var option in Options)
+			Values.Remove(option);
+		OnChange.InvokeAsync();
+	}
+
+	private void OnSearchInput(ChangeEventArgs e)
+	{
+		string value = (e.Value?.ToString() ?? "").Trim().ToLower();
+		_searchString = value;
+		int nowVisible = 0;
+
+		if (value == "")
+		{
+			foreach (var option in Options)
+				_isOptionsVisible[option] = true;
+			_js.InvokeVoidAsync("markCheckbox", Name, Values.Count == Options.Count);
+			return;
+		}
+
+		foreach (var option in Options)
+		{
+			string separator = " ";
+			if (Name == ResidentPropreties.BIRTHDAY)
+				separator = ".";
+
+			bool isVilible = option.Split(separator).Any(o => o.ToLower().StartsWith(value));
+			if (isVilible) nowVisible++;
+			_isOptionsVisible[option] = isVilible;
+		}
+
+		_js.InvokeVoidAsync("markCheckbox", Name, Values.Count == nowVisible);
+	}
+
+	private void OnSearchFocus()
+	{
+		_js.InvokeVoidAsync("setInputValue", Name, _searchString);
+	}
+}

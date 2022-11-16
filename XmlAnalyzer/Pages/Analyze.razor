@@ -1,0 +1,92 @@
+﻿@page "/analyze"
+@using XmlAnalyzer.Data
+@inject IJSRuntime _js
+@inject Analyzer Analyzer
+@inject NavigationManager NavigationManager
+
+@if (_isLoading)
+{
+	<span>Loading...</span>
+}
+else
+{
+	<div class="main">
+		<table>
+			<thead>
+				<tr>
+					@foreach (string name in _propretyNames)
+					{
+						<td>
+							<MultiSelect 
+								Name="@name" 
+								Options="@_options[name]" 
+								Values="@_filters[name]"
+								OnChange="@OnFilterChanged" />
+						</td>
+					}
+				</tr>
+			</thead>
+			<tbody>
+				@foreach (var r in _residents)
+				{
+					<tr>
+						@foreach (var p in _propretyNames)
+						{
+							if (p == ResidentPropreties.EMAIL)
+							{
+								<td>
+									<a href="mailto: @r[p]" class="email">@r[p]</a>
+								</td>
+							}
+							else
+							{
+								<td>@r[p]</td>
+							}
+						}
+					</tr>
+				}
+			</tbody>
+		</table>
+		@if (_residents.Count == 0)
+		{
+			<div class="single">
+				Нічого не знайдено
+			</div>
+		}
+	</div>
+}
+
+@code {
+	private bool _isLoading = true;
+	private List<Resident> _residents = new();
+	private string[] _propretyNames = ResidentPropreties.GetPropreties();
+	private Dictionary<string, Filter> _options = new();
+	private Dictionary<string, Filter> _filters = new();
+
+	protected override void OnInitialized()
+	{
+		if (Analyzer.File.Length == 0)
+		{
+			NavigationManager.NavigateTo("/");
+			return;
+		}
+
+
+		_residents = Analyzer.ParseXml();
+		_options = Analyzer.GetOptions();
+		for (int i = 0; i < _propretyNames.Length; i++)
+			_filters[_propretyNames[i]] = new();
+
+		_isLoading = false;
+	}
+
+	protected override async Task OnAfterRenderAsync(bool firstRender)
+	{
+		await _js.InvokeVoidAsync("onMultiSelectRendered");
+	}
+
+	private void OnFilterChanged()
+	{
+		_residents = Analyzer.ParseXml(_filters);
+	}
+}

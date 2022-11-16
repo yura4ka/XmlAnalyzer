@@ -1,0 +1,52 @@
+﻿.main {
+    overflow-x: scroll;
+    height: 95vh;
+}
+
+table {
+    margin: 0 10px;
+    font-size: 18px;
+    border-collapse: collapse;
+}
+
+td {
+    padding: 15px;
+}
+
+tr {
+    border-bottom: 1px solid var(--light-gray);
+    transition: 200ms;
+}
+
+    tr:last-of-type {
+        border: none;
+    }
+
+tbody tr:hover {
+    background-color: var(--light-gray);
+}
+
+.email {
+    color: var(--accent-color);
+}
+
+    .email:hover {
+        color: var(--accent-darker-color);
+    }
+
+.phone {
+    font-size: 16px;
+}
+
+.thead {
+    margin-bottom: 30px;
+}
+
+.single {
+    display: flex;
+    justify-content: center;
+    margin: 50px;
+    color: var(--dark-color);
+    font-size: 20px;
+    font-weight: 500;
+}

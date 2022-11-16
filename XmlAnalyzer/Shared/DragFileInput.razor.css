@@ -1,0 +1,50 @@
+﻿.dragArea {
+    padding: 70px 200px;
+    border: 2px dashed var(--accent-color);
+    border-radius: 10px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: 100ms;
+}
+
+    .dragArea.drag {
+        border-style: solid;
+    }
+
+.inputLable:hover ~ .inputButton {
+    background-color: var(--dark-accent-color);
+}
+
+.inputImg {
+    align-self: center;
+    margin-bottom: 20px;
+    width: 60px;
+    height: 60px;
+}
+
+.inputButton {
+    font-size: 18px;
+    font-weight: 500;
+    padding: 20px 50px;
+    border: none;
+    border-radius: 5px;
+    background-color: var(--accent-color);
+    color: white;
+    margin-bottom: 10px;
+}
+
+    .inputButton::before {
+        content: "";
+        width: 24px;
+        height: 24px;
+        display: block;
+        background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABmJLR0QA/wD/AP+gvaeTAAABV0lEQVRIib2VvUoDQRSFvyv2/lUWVlrbGFIFIrZiIULyCL6BdZ7B1lJBspDCBxAN+FekS51KFNKpIJbHYidhM7q7sxvXA1PsnTvzzcyeuQMVy/yApGWgBazkjP0ErszsORjgJh8Aj8BLxrgGsAqsAW0zu81ZzBRwLOk8IK/jWlPSWNJuWu6C970OjIJWA5hZHzgCupL2QgCFZWZ3DnL5G6Qs4BXY9CBtB9lIJi6WBETAiaQLYJiIj4FD4HQSKLUDM3sDdoA+sZ0n7YPYXVOV3QFm9g6cJWOSOn7e3D85T4UAkuqS6pUAJDWAa+AmzfOlAe6m9ohLyD2xHZt/AnBH0iX2+YNrLSCSVJsbAHwBB8mC5krEvuvLVK5NzWyYEh8ELK56mxa9aL1KAWnHlSX/iGaqZAlt4b2EaU/mE7NVMkTbQB2ouTr1E+AgS8Q+L7qTERAlJ/8XfQOE8X3fWd694QAAAABJRU5ErkJggg==");
+        background-repeat: no-repeat;
+        margin-right: 6px;
+    }
+
+    .inputButton:hover {
+        background-color: var(--dark-accent-color);
+    }

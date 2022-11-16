@@ -1,0 +1,17 @@
+﻿@page "/"
+@using XmlAnalyzer.Data;
+@inject Analyzer Analyzer
+@inject NavigationManager NavigationManager
+
+<div class="container">
+	<DragFileInput FileLoaded="OnFileLoaded" />
+</div>
+
+
+@code {
+	private void OnFileLoaded(byte[] file)
+	{
+		Analyzer.File = file;
+		NavigationManager.NavigateTo("/analyze");
+	}
+}

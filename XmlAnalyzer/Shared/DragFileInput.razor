@@ -1,0 +1,37 @@
+﻿@using XmlAnalyzer.Shared.Svg
+
+<div class="dragArea @dragAreaStyle">
+		<label class="inputLable">
+			<InputFile class="fileInput" accept="text/xml" OnChange="@OnInputFileChanged" @ondragenter="OnDragEnter" @ondragleave="OnDragLeave" />
+		</label>
+		<div class="inputImg">
+			<XmlFile />
+		</div>
+		<button class="inputButton" onclick="">Виберіть файл</button>
+		або перетягніть його сюди
+</div>
+
+@code {
+	[Parameter]
+	public EventCallback<byte[]> FileLoaded { get; set; }
+
+	private string dragAreaStyle = "";
+
+	private async void OnInputFileChanged(InputFileChangeEventArgs inputFileChangeEvent)
+	{
+		var file = inputFileChangeEvent.File;
+		var buffer = new byte[file.Size];
+		await file.OpenReadStream().ReadAsync(buffer);
+		await FileLoaded.InvokeAsync(buffer);
+	}
+
+	private void OnDragEnter()
+	{
+		dragAreaStyle = "drag";
+	}
+
+	private void OnDragLeave()
+	{
+		dragAreaStyle = "";
+	}
+}

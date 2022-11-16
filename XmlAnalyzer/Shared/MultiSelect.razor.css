@@ -1,0 +1,130 @@
+﻿.multiSelect {
+    position: relative;
+}
+
+.selectInput {
+    width: 100%;
+    font-size: 16px;
+    font-style: italic;
+    color: #bfbfbf;
+    outline: none;
+    border: 1px solid var(--light-gray);
+    border-radius: 5px;
+    padding: 10px 15px;
+    transition: 200ms;
+}
+
+    .selectInput:hover {
+        box-shadow: 0 0 10px 0 rgba(120,120,120,0.75);
+    }
+
+    .selectInput:focus:hover {
+        box-shadow: 0 0 10px 0 rgba(73,113,116,0.75);
+    }
+
+    .selectInput:focus {
+        border-color: var(--accent-color);
+        font-style: normal;
+        color: #000;
+    }
+
+.options {
+    display: none;
+    margin-top: 10px;
+    position: absolute;
+    font-size: 16px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 1px 0 17px 0 rgba(120,120,120,0.75);
+    max-height: 200px;
+    overflow-y: scroll;
+}
+
+    .options::-webkit-scrollbar {
+        width: 2px;
+        background-color: #C7C7C7;
+        border-radius: 5px;
+    }
+
+    .options::-webkit-scrollbar-thumb {
+        background-color: #959595;
+        outline: none;
+    }
+
+    .options.visible {
+        display: block;
+    }
+
+.checkmark {
+    display: block;
+    position: relative;
+    width: 18px;
+    height: 18px;
+    padding: 2px;
+    border: 1px solid var(--light-gray);
+    margin-right: 10px;
+    transition: 200ms;
+}
+
+.optionContainer {
+    display: flex;
+    white-space: nowrap;
+    align-items: center;
+    padding: 10px;
+    user-select: none;
+    cursor: pointer;
+    transition: 200ms;
+}
+
+    .optionContainer.hidden {
+        display: none;
+    }
+
+    .optionContainer input[type=checkbox] {
+        width: 0;
+        height: 0;
+    }
+
+    .optionContainer:hover {
+        background-color: var(--light-gray);
+    }
+
+        .optionContainer:hover .checkmark {
+            background-color: #fff;
+        }
+
+    .optionContainer input:checked ~ .checkmark {
+        background-color: var(--accent-color);
+        border: none;
+    }
+
+        .optionContainer input:checked ~ .checkmark::before {
+            content: "";
+            position: absolute;
+            border: solid #fff;
+            border-width: 0 2px 2px 0;
+            border-radius: 1px;
+            transform: rotate(45deg);
+            width: 25%;
+            height: 50%;
+            left: 25%;
+        }
+
+.name {
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--dark-color);
+    margin-bottom: 10px;
+}
+
+.chooseAll {
+    font-weight: 500;
+}
+
+.clearFilters input {
+    border: none;
+    color: var(--error-color);
+    background: none;
+    font-size: 16px;
+    cursor: pointer;
+}
