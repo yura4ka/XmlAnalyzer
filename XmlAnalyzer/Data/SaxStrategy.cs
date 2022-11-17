@@ -4,6 +4,7 @@ namespace XmlAnalyzer.Data
 {
 	public class SaxStrategy : IAnalyzeStrategy
 	{
+		public string GetName() => "SAX";
 		public Dictionary<string, Filter> GetOptions(byte[] file)
 		{
 			var xml = new XmlTextReader(new MemoryStream(file));

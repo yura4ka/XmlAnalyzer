@@ -3,7 +3,8 @@
     const optionContainers = [...document.querySelectorAll('.options')];
     const containers = [...document.querySelectorAll('.container')];
     const chooseAllInputs = [...document.querySelectorAll('.chooseAll input')];
-    const clearAllButtons = [...document.querySelectorAll('.clearFilters input')]
+    const clearAllButtons = [...document.querySelectorAll('.clearFilters input')];
+    const customSelect= document.querySelector('.customSelectField');
     const main = document.body;
 
     let currentInput = {
@@ -39,10 +40,25 @@
         });
     });
 
+    customSelect.addEventListener('click', (e) => {
+        if (customSelect.classList.contains('active'))
+            return;
+        customSelect.classList.add('active');
+        customSelect.nextElementSibling.classList.add('visible');
+        optionContainers[currentInput.index]?.classList.remove('visible');
+        e.stopPropagation();
+    });
+
     main.addEventListener('click', (e) => {
-        if ((e.target.parentElement !== containers[currentInput.index]
-            && e.target.parentElement.parentElement !== containers[currentInput.index]
-            && e.target.parentElement.parentElement.parentElement !== containers[currentInput.index]))
+        customSelect.classList.remove('active');
+        customSelect.nextElementSibling.classList.remove('visible');
+
+        if (currentInput.element === null)
+            return;
+
+        if ((e.target.parentElement !== containers[currentInput?.index]
+            && e.target.parentElement?.parentElement !== containers[currentInput?.index]
+            && e.target.parentElement?.parentElement?.parentElement !== containers[currentInput?.index]))
         {
             let container = optionContainers[currentInput.index];
             container?.classList.remove('visible');
@@ -51,7 +67,7 @@
             checkboxes.forEach(c => { if (c.checked) marked++; });
             currentInput.element.value = marked != 0 ? `${Math.min(marked, checkboxes.length - 1)} вибрано` : '';
         } else {
-            currentInput.element.focus();
+            currentInput?.element.focus();
         }
     });
 }

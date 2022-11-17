@@ -4,6 +4,7 @@ namespace XmlAnalyzer.Data
 {
 	public class XmlDomStrategy : IAnalyzeStrategy
 	{
+		public string GetName() => "XML DOM";
 		public Dictionary<string, Filter> GetOptions(byte[] file)
 		{
 			var result = new Dictionary<string, Filter>();

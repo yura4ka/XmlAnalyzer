@@ -1,0 +1,48 @@
+﻿<div class="customSelect">
+	<div class="name">@Name:</div>
+	<div class="selectContainer">
+		<div class="customSelectField">@Options[current]</div>
+		<div class="selectOptions">
+			@for (int i = 0; i < Options.Length; i++)
+			{
+				<label class="selectLable @(i == current ? "current" : "")">
+					<input type="radio"
+					   name="@Name"
+					   value="@i"
+					   checked="@(i == current)"
+					   @onchange=OnOptionClick />
+					@Options[i]
+				</label>
+			}
+		</div>
+	</div>
+
+</div>
+
+@code {
+	[Parameter]
+	public string Name { get; set; } = "";
+	[Parameter]
+	public int DefaultValue { get; set; } = 0;
+	[Parameter]
+	public string[] Options { get; set; } = new string[] { "" };
+	[Parameter]
+	public EventCallback<int> OnChange { get; set; }
+
+	private int current;
+
+	protected override void OnInitialized()
+	{
+		current = DefaultValue;
+		base.OnInitialized();
+	}
+
+	private void OnOptionClick(ChangeEventArgs e)
+	{
+		int value = int.Parse(e.Value?.ToString() ?? "0");
+		if (value == current)
+			return;
+		current = value;
+		OnChange.InvokeAsync(value);
+	}
+}

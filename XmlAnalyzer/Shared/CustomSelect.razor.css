@@ -1,0 +1,101 @@
+﻿.customSelect {
+    display: flex;
+    align-items: center;
+}
+
+.name {
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--dark-color);
+    margin-right: 20px;
+}
+
+.selectContainer {
+    position: relative;
+}
+
+.customSelectField {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-width: 145px;
+    padding: 10px 15px;
+    font-size: 16px;
+    border: 1px solid var(--light-gray);
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 200ms;
+}
+
+    .customSelectField::after {
+        content: "";
+        display: block;
+        position: relative;
+        width: 0.5em;
+        height: 0.5em;
+        margin-left: 10px;
+        border: solid var(--dark-color);
+        border-width: 2px 2px 0 0;
+        border-radius: 1px;
+        transform: translateY(-25%) rotate(135deg);
+        transition: 200ms;
+    }
+
+    .customSelectField:hover {
+        box-shadow: 0 0 10px 0 rgb(120 120 120 / 75%);
+    }
+
+    .customSelectField.active {
+        border-color: var(--accent-color);
+        color: var(--accent-color);
+    }
+
+        .customSelectField.active:hover {
+            box-shadow: 0 0 10px 0 rgba(73,113,116,0.75);
+        }
+
+        .customSelectField.active::after {
+            border-color: var(--accent-color);
+            transform: translateY(25%) rotate(-45deg);
+        }
+
+.selectOptions {
+    display: none;
+    flex-direction: column;
+    margin-top: 10px;
+    position: absolute;
+    font-size: 16px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 1px 0 17px 0 rgba(120,120,120,0.75);
+    z-index: 5;
+}
+
+    .selectOptions.visible {
+        display: flex;
+    }
+
+.selectLable {
+    display: flex;
+    white-space: nowrap;
+    padding: 10px;
+    user-select: none;
+    cursor: pointer;
+    min-width: 145px;
+    transition-property: color, background-color;
+    transition-duration: 200ms;
+}
+
+    .selectLable.current {
+        font-weight: 500;
+        color: var(--accent-color);
+    }
+
+    .selectLable:not(.current):hover {
+        background-color: var(--light-gray);
+    }
+
+
+    .selectLable input[type=radio] {
+        appearance: none;
+    }

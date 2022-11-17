@@ -14,14 +14,21 @@ else
 		<table>
 			<thead>
 				<tr>
+					<td colspan="@_propretyNames.Length">
+						<CustomSelect Name="Стратегія"
+								  DefaultValue="0"
+								  Options="@_strategies.Select(s => s.GetName()).ToArray()"
+								  OnChange="@OnStrategyChanged" />
+					</td>
+				</tr>
+				<tr>
 					@foreach (string name in _propretyNames)
 					{
 						<td>
-							<MultiSelect 
-								Name="@name" 
-								Options="@_options[name]" 
-								Values="@_filters[name]"
-								OnChange="@OnFilterChanged" />
+							<MultiSelect Name="@name"
+								 Options="@_options[name]"
+								 Values="@_filters[name]"
+								 OnChange="@OnFilterChanged" />
 						</td>
 					}
 				</tr>
@@ -49,7 +56,7 @@ else
 		</table>
 		@if (_residents.Count == 0)
 		{
-			<div class="single">
+			<div class="notFound">
 				Нічого не знайдено
 			</div>
 		}
@@ -62,6 +69,8 @@ else
 	private string[] _propretyNames = ResidentPropreties.GetPropreties();
 	private Dictionary<string, Filter> _options = new();
 	private Dictionary<string, Filter> _filters = new();
+	private IAnalyzeStrategy[] _strategies =
+	{ new LinqToXmlStrategy(), new XmlDomStrategy(), new SaxStrategy() };
 
 	protected override void OnInitialized()
 	{
@@ -88,5 +97,10 @@ else
 	private void OnFilterChanged()
 	{
 		_residents = Analyzer.ParseXml(_filters);
+	}
+
+	private void OnStrategyChanged(int value)
+	{
+		Analyzer.AnalyzeStrategy = _strategies[value];
 	}
 }

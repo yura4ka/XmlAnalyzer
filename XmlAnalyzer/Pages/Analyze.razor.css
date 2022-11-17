@@ -42,7 +42,7 @@ tbody tr:hover {
     margin-bottom: 30px;
 }
 
-.single {
+.notFound {
     display: flex;
     justify-content: center;
     margin: 50px;
@@ -50,3 +50,4 @@ tbody tr:hover {
     font-size: 20px;
     font-weight: 500;
 }
+

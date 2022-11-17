@@ -7,6 +7,7 @@ namespace XmlAnalyzer.Data
 {
 	public class LinqToXmlStrategy : IAnalyzeStrategy
 	{
+		public string GetName() => "LINQ to XML";
 		public Dictionary<string, Filter> GetOptions(byte[] file)
 		{
 			var xml = XDocument.Load(new MemoryStream(file));
