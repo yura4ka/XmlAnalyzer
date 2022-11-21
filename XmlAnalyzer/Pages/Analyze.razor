@@ -19,7 +19,7 @@ else
 							<div class="fileName">@Analyzer.Name</div>
 							<div class="tableFunctions">
 								<label class="changeFile">
-									<InputFile />
+									<InputFile accept="text/xml" OnChange="@OnFileChanged" />
 									Змінити файл
 								</label>
 								<button class="downloadHtml">Скачати HTML</button>
@@ -105,7 +105,8 @@ else
 
 	protected override async Task OnAfterRenderAsync(bool firstRender)
 	{
-		await _js.InvokeVoidAsync("onMultiSelectRendered");
+		if (firstRender)
+			await _js.InvokeVoidAsync("onMultiSelectRendered");
 	}
 
 	private void OnFilterChanged()
@@ -116,5 +117,25 @@ else
 	private void OnStrategyChanged(int value)
 	{
 		Analyzer.AnalyzeStrategy = _strategies[value];
+	}
+
+	private void ClearFilters()
+	{
+		foreach (var f in _filters)
+			f.Value.Clear();
+		_js.InvokeVoidAsync("clearFilters");
+	}
+
+	private async void OnFileChanged(InputFileChangeEventArgs inputFileChangeEvent)
+	{
+		var file = inputFileChangeEvent.File;
+		var buffer = new byte[file.Size];
+		await file.OpenReadStream().ReadAsync(buffer);
+		Analyzer.SetFile(file.Name, buffer);
+		_options = Analyzer.GetOptions();
+		_residents = Analyzer.ParseXml();
+		ClearFilters();
+		_isLoading = false;
+		StateHasChanged();
 	}
 }

@@ -79,3 +79,12 @@ function markCheckbox(name, value) {
 function setInputValue(name, value) {
     document.querySelector(`input[type=text][name=${name}]`).value = value;
 }
+
+function clearFilters() {
+    let filtersContainers = [...document.querySelectorAll('.multiSelect .container')];
+    filtersContainers.forEach(container => {
+        container.firstChild.value = '';
+        container.querySelectorAll(':scope input[type=checkbox]')
+            .forEach(box => box.checked = false);
+    });
+}
