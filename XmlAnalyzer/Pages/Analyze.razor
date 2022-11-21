@@ -15,7 +15,7 @@ else
 			<thead>
 				<tr>
 					<td colspan="@_propretyNames.Length">
-						<div class="tableInfo">
+						<div class="tableSettings tableInfo">
 							<div class="fileName">@Analyzer.Name</div>
 							<div class="tableFunctions">
 								<label class="changeFile">
@@ -29,10 +29,13 @@ else
 				</tr>
 				<tr>
 					<td colspan="@_propretyNames.Length">
+						<div class="tableSettings">
 						<CustomSelect Name="Стратегія"
 								  DefaultValue="0"
 								  Options="@_strategies.Select(s => s.GetName()).ToArray()"
 								  OnChange="@OnStrategyChanged" />
+						<button class="clearAll" @onclick="ClearFilters">Очистити усі фільтри</button>
+						</div>
 					</td>
 				</tr>
 				<tr>
@@ -124,6 +127,7 @@ else
 		foreach (var f in _filters)
 			f.Value.Clear();
 		_js.InvokeVoidAsync("clearFilters");
+		_residents = Analyzer.ParseXml();
 	}
 
 	private async void OnFileChanged(InputFileChangeEventArgs inputFileChangeEvent)
@@ -133,7 +137,6 @@ else
 		await file.OpenReadStream().ReadAsync(buffer);
 		Analyzer.SetFile(file.Name, buffer);
 		_options = Analyzer.GetOptions();
-		_residents = Analyzer.ParseXml();
 		ClearFilters();
 		_isLoading = false;
 		StateHasChanged();

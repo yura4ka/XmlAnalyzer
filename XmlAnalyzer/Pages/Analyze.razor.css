@@ -51,10 +51,13 @@ thead tr:first-of-type td {
     padding: 0;
 }
 
-.tableInfo {
+.tableSettings {
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+.tableInfo {
     padding: 10px 20px;
 }
 
@@ -119,3 +122,18 @@ thead tr:first-of-type td {
     .downloadHtml::before {
         background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABmJLR0QA/wD/AP+gvaeTAAAA3UlEQVRIie2UsWoCURBFz2pKwWC6FCls8hkuFn6BhVWIhX8R8huxNZ2tXYJd/sXGRiWdCcfCFZZlffowRcA9MM1l5t55DDyo+EvUsfoWM3MTmfEY2U8tdqAKqAL+YYCaqp0SvaumFwcAz8Bc7efM+8AHMDxjPozaUL/UrbrMaptpjVizgfoQCDlQaq621adQwI/6EnjJZ1alm6uv6m9eK3529RINgCRJvoHe0e321CjctXjkDdA6YRLiDljnheK2M2CkCiwize+BETA92qHequ/q2nhW6kRtRi527ewA/X/I3c6n3bIAAAAASUVORK5CYII=);
     }
+
+.clearAll {
+    background-color: transparent;
+    outline: none;
+    border: 1px solid var(--error-color);
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-size: 16px;
+    color: var(--error-color);
+}
+
+.clearAll:hover {
+    border-color: var(--error-color);
+    box-shadow: var(--error-color) 0 0 12px 0; 
+}
