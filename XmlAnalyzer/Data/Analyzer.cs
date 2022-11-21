@@ -1,4 +1,6 @@
 ﻿global using Resident = System.Collections.Generic.Dictionary<string, string>;
+using System.Xml.Xsl;
+using System.Xml;
 
 namespace XmlAnalyzer.Data
 {
@@ -29,6 +31,19 @@ namespace XmlAnalyzer.Data
 		public List<Resident> ParseXml(Dictionary<string, Filter>? filters = null)
 		{
 			return AnalyzeStrategy.ParseXml(File, filters);
+		}
+
+		public Stream TransformToHTML()
+		{
+			var xslt = new XslCompiledTransform();
+			xslt.Load(new XmlTextReader(new StringReader(XslPattern.file)));
+			var resultStream = new MemoryStream(); 
+			var result = XmlWriter.Create(resultStream);
+			var input = new MemoryStream(File);
+			xslt.Transform(new XmlTextReader(input), result);
+			result.Flush();
+			resultStream.Position = 0;
+			return resultStream;
 		}
 	}
 }

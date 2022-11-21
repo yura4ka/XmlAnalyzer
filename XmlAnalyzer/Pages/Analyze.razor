@@ -22,7 +22,7 @@ else
 									<InputFile accept="text/xml" OnChange="@OnFileChanged" />
 									Змінити файл
 								</label>
-								<button class="downloadHtml">Скачати HTML</button>
+								<button class="downloadHtml" @onclick="DownloadHtml">Скачати HTML</button>
 							</div>
 						</div>
 					</td>
@@ -140,5 +140,13 @@ else
 		ClearFilters();
 		_isLoading = false;
 		StateHasChanged();
+	}
+
+	private async Task DownloadHtml()
+	{
+		var fileStream = Analyzer.TransformToHTML();
+		var fileName = Analyzer.Name + ".html";
+		using var streamRef = new DotNetStreamReference(stream: fileStream);
+		await _js.InvokeVoidAsync("downloadFile", fileName, streamRef);
 	}
 }
