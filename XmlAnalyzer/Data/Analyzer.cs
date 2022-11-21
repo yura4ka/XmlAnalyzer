@@ -4,13 +4,21 @@ namespace XmlAnalyzer.Data
 {
 	public class Analyzer
 	{
-		public byte[] File { get; set; }
+		public byte[] File { get; private set; }
 		public IAnalyzeStrategy AnalyzeStrategy { get; set; }
+		public string Name { get; private set; }
 
 		public Analyzer() 
 		{ 
 			File = Array.Empty<byte>();
 			AnalyzeStrategy = new LinqToXmlStrategy();
+			Name = string.Empty;
+		}
+
+		public void SetFile(string name, byte[] file)
+		{
+			Name = name;
+			File = file;
 		}
 
 		public Dictionary<string, Filter> GetOptions()

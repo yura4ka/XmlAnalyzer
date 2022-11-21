@@ -1,19 +1,19 @@
 ﻿@using XmlAnalyzer.Shared.Svg
 
 <div class="dragArea @dragAreaStyle">
-		<label class="inputLable">
-			<InputFile class="fileInput" accept="text/xml" OnChange="@OnInputFileChanged" @ondragenter="OnDragEnter" @ondragleave="OnDragLeave" />
-		</label>
-		<div class="inputImg">
-			<XmlFile />
-		</div>
-		<button class="inputButton" onclick="">Виберіть файл</button>
-		або перетягніть його сюди
+	<label class="inputLable">
+		<InputFile class="fileInput" accept="text/xml" OnChange="@OnInputFileChanged" @ondragenter="OnDragEnter" @ondragleave="OnDragLeave" />
+	</label>
+	<div class="inputImg">
+		<XmlFile />
+	</div>
+	<button class="inputButton" onclick="">Виберіть файл</button>
+	або перетягніть його сюди
 </div>
 
 @code {
 	[Parameter]
-	public EventCallback<byte[]> FileLoaded { get; set; }
+	public EventCallback<Tuple<string, byte[]>> FileLoaded { get; set; }
 
 	private string dragAreaStyle = "";
 
@@ -22,7 +22,7 @@
 		var file = inputFileChangeEvent.File;
 		var buffer = new byte[file.Size];
 		await file.OpenReadStream().ReadAsync(buffer);
-		await FileLoaded.InvokeAsync(buffer);
+		await FileLoaded.InvokeAsync(new(file.Name, buffer));
 	}
 
 	private void OnDragEnter()

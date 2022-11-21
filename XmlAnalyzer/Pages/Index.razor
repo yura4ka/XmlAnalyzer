@@ -7,11 +7,10 @@
 	<DragFileInput FileLoaded="OnFileLoaded" />
 </div>
 
-
 @code {
-	private void OnFileLoaded(byte[] file)
+	private void OnFileLoaded(Tuple<string, byte[]> fileData)
 	{
-		Analyzer.File = file;
+		Analyzer.SetFile(fileData.Item1, fileData.Item2);
 		NavigationManager.NavigateTo("/analyze");
 	}
 }

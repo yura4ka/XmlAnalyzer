@@ -15,6 +15,20 @@ else
 			<thead>
 				<tr>
 					<td colspan="@_propretyNames.Length">
+						<div class="tableInfo">
+							<div class="fileName">@Analyzer.Name</div>
+							<div class="tableFunctions">
+								<label class="changeFile">
+									<InputFile />
+									Змінити файл
+								</label>
+								<button class="downloadHtml">Скачати HTML</button>
+							</div>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="@_propretyNames.Length">
 						<CustomSelect Name="Стратегія"
 								  DefaultValue="0"
 								  Options="@_strategies.Select(s => s.GetName()).ToArray()"

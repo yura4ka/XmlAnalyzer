@@ -12,7 +12,6 @@
     --light-gray: #efefef;
     --dark-color: #2e2b2b;
     --error-color: #eb6440;
-
     --nav-height: 102px;
 }
 
@@ -41,6 +40,12 @@ button {
     height: 100%;
     opacity: 0;
     cursor: pointer;
+    font-size: 0;
+}
+
+.changeFile input {
+    width: 0;
+    height: 0;
     font-size: 0;
 }
 
