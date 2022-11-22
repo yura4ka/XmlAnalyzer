@@ -10,6 +10,7 @@
 }
 else
 {
+	<WrongFile IsVisible="@_isFileError" />
 	<div class="main">
 		<table>
 			<thead>
@@ -82,6 +83,7 @@ else
 
 @code {
 	private bool _isLoading = true;
+	private bool _isFileError = false;
 	private List<Resident> _residents = new();
 	private string[] _propretyNames = ResidentPropreties.GetPropreties();
 	private Dictionary<string, Filter> _options = new();
@@ -133,6 +135,12 @@ else
 	private async void OnFileChanged(InputFileChangeEventArgs inputFileChangeEvent)
 	{
 		var file = inputFileChangeEvent.File;
+		if (file.ContentType != "text/xml")
+		{
+			_isFileError = true;
+			return;
+		}
+
 		var buffer = new byte[file.Size];
 		await file.OpenReadStream().ReadAsync(buffer);
 		Analyzer.SetFile(file.Name, buffer);

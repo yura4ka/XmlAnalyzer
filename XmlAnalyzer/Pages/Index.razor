@@ -3,13 +3,23 @@
 @inject Analyzer Analyzer
 @inject NavigationManager NavigationManager
 
+<WrongFile IsVisible="@_isFileError" />
+
 <div class="container">
 	<DragFileInput FileLoaded="OnFileLoaded" />
 </div>
 
 @code {
-	private void OnFileLoaded(Tuple<string, byte[]> fileData)
+	private bool _isFileError = false;
+
+	private void OnFileLoaded(Tuple<string, byte[], string> fileData)
 	{
+		if (fileData.Item3 != "text/xml")
+		{
+			_isFileError = true;
+			return;
+		}
+		_isFileError = false;
 		Analyzer.SetFile(fileData.Item1, fileData.Item2);
 		NavigationManager.NavigateTo("/analyze");
 	}
